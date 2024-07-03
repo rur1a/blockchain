@@ -1,4 +1,8 @@
-﻿class BlockchainBuild
+﻿using blockchain.HashFunctions;
+
+namespace blockchain.Blockain;
+
+class BlockchainBuild
 {
 	private readonly IHashFunction _hashFunction;
 	private string _tail;

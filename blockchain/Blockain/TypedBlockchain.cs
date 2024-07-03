@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Text.Json;
 
+namespace blockchain.Blockain;
+
 record TypedBlock<T>(string Hash, string ParentHash, string RawData, T Data);
 class TypedBlockchain<T> : IEnumerable<TypedBlock<T>>
 {
 	private readonly Blockhain _blockchain;
-	public TypedBlockchain(Blockhain blockchain)
+	public TypedBlockchain(Blockhain blockchain, params IRule<T>[] rules)
 	{
 		_blockchain = blockchain;
 	}
@@ -21,4 +23,12 @@ class TypedBlockchain<T> : IEnumerable<TypedBlock<T>>
 			.GetEnumerator();
 
 	IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}
+
+internal interface IRule<T>
+{
+	void Execute(TypedBlock<T> nextBlock)
+	{
+		
+	}
 }

@@ -1,4 +1,7 @@
 ﻿using System.Collections;
+using blockchain.HashFunctions;
+
+namespace blockchain.Blockain;
 
 record Block(string ParentHash, string Data, string Hash);
 class Blockhain : IEnumerable<Block>
