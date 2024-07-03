@@ -15,11 +15,18 @@ class Blockhain : IEnumerable<Block>
 		_hashFunction = hashFunction;
 		_blockchainBuild = new BlockchainBuild(hashFunction, null);
 	}
+	
+	public Block BuildBlock(string data)
+	{
+		var block = _blockchainBuild.AddBlock(data);
+		return block;
 
-	public void AddBlock(string data)
+	}
+
+
+	public void AddBlock(Block block)
 	{
 		var tail = _blocks.LastOrDefault();
-		var block = _blockchainBuild.AddBlock(data);
 		if (block.ParentHash == tail?.Hash)
 		{
 			var expectedHash = _hashFunction.GetHash(block.ParentHash + block.Data);
