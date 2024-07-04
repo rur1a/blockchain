@@ -22,10 +22,8 @@ class TypedBlockchain<T> : IEnumerable<TypedBlock<T>>
 		_rules = rules;
 	}
 
-	public void AddBlock(T data)
+	public void AddBlock(Block lowBlock)
 	{
-		var raw = JsonSerializer.Serialize(data);
-		var lowBlock = _blockchain.BuildBlock(raw);
 		var block = TypedBlock<T>.FromLowLevel(lowBlock);
 		foreach (var rule in _rules)
 		{
@@ -34,9 +32,17 @@ class TypedBlockchain<T> : IEnumerable<TypedBlock<T>>
 		_blockchain.AddBlock(lowBlock);
 	}
 
+	public Block BuildBlock(T data)
+	{
+		var raw = JsonSerializer.Serialize(data);
+		var lowBlock = _blockchain.BuildBlock(raw);
+		return lowBlock;
+	}
+
 	public IEnumerator<TypedBlock<T>> GetEnumerator() =>
 		_blockchain.Select(TypedBlock<T>.FromLowLevel)
 			.GetEnumerator();
 
 	IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
 }

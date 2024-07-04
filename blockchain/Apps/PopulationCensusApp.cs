@@ -2,7 +2,7 @@
 using blockchain.Blockain.Rules;
 using blockchain.HashFunctions;
 
-namespace blockchain;
+namespace blockchain.Apps;
 
 record Person(string Name, string Surname);
 class PopulationCensusApp
@@ -18,7 +18,8 @@ class PopulationCensusApp
 
 	public void RegisterPerson(Person person)
 	{
-		_blockchain.AddBlock(person);
+		var block = _blockchain.BuildBlock(person);
+		_blockchain.AddBlock(block);
 	}
 
 	public void PrintAll()

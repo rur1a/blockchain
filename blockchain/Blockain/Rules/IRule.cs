@@ -1,4 +1,6 @@
-﻿namespace blockchain.Blockain.Rules;
+﻿using blockchain.Apps;
+
+namespace blockchain.Blockain.Rules;
 
 interface IRule<T>
 {

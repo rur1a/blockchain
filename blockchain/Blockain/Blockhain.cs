@@ -23,7 +23,6 @@ class Blockhain : IEnumerable<Block>
 
 	}
 
-
 	public void AddBlock(Block block)
 	{
 		var tail = _blocks.LastOrDefault();
