@@ -1,5 +1,9 @@
 ﻿using blockchain.Blockain;
+using blockchain.Blockain.Rules;
 using blockchain.HashFunctions;
+
+namespace blockchain;
+
 record Person(string Name, string Surname);
 class PopulationCensusApp
 {

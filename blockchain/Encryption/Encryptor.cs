@@ -1,12 +1,14 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
+namespace blockchain.Encryption;
+
 public record KeyPair(string PublicKey, string PrivateKey);
 
 public interface IEncryptor
 {
     KeyPair GenerateKeys();
-    string Sign(string data, string privateKey);
+    string Sign(string privateKey, string data);
     bool VerifySign(string publicKey, string data, string sign);
 }
 
@@ -106,7 +108,7 @@ public class RSAEncryptor : IEncryptor
     private static byte[] GetArray(RSAParameters p)
     {
         var length =
-              GetLength(p.D)
+            GetLength(p.D)
             + GetLength(p.DP)
             + GetLength(p.DQ)
             + GetLength(p.Exponent)
@@ -116,7 +118,7 @@ public class RSAEncryptor : IEncryptor
             + GetLength(p.Q);
         length = (length / 4 + 1) * 4;
         byte[] data = new byte[length];
-var pos = 0;
+        var pos = 0;
         pos = CopyTo(data, p.D, pos);
         pos = CopyTo(data, p.DP, pos);
         pos = CopyTo(data, p.DQ, pos);
