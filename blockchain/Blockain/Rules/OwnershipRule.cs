@@ -17,9 +17,9 @@ class OwnershipRule : IRule<NFTBlock>
 			{
 				if (block.Data.Data.Art == nextBlock.Data.Data.Art)
 				{
-					if(block.Data.Data.To == nextBlock.Data.Data.To)
+					if(block.Data.Data.To == nextBlock.Data.Data.From)
 						return;
-					throw new ApplicationException("YOu are trying to transfer the work of art that you dont own");
+					throw new ApplicationException("You are trying to transfer the work of art that you dont own");
 				}
 				
 			}

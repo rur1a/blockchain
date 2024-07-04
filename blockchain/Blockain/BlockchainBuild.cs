@@ -13,11 +13,15 @@ class BlockchainBuild
 		_tail = tail;
 	}
 
-	public Block AddBlock(string data)
+	public void AddBlock(Block data)
+	{
+		_tail = data.Hash;
+	}
+
+	public Block BuildBlock(string data)
 	{
 		var hash = _hashFunction.GetHash(_tail + data);
 		var block = new Block(_tail, data, hash);
-		_tail = hash;
 		return block;
 	}
 }

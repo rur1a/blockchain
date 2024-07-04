@@ -18,7 +18,7 @@ class Blockhain : IEnumerable<Block>
 	
 	public Block BuildBlock(string data)
 	{
-		var block = _blockchainBuild.AddBlock(data);
+		var block = _blockchainBuild.BuildBlock(data);
 		return block;
 
 	}
@@ -29,8 +29,11 @@ class Blockhain : IEnumerable<Block>
 		if (block.ParentHash == tail?.Hash)
 		{
 			var expectedHash = _hashFunction.GetHash(block.ParentHash + block.Data);
-			if(expectedHash==block.Hash)
+			if (expectedHash == block.Hash)
+			{
 				_blocks.Add(block);
+				_blockchainBuild.AddBlock(block);
+			}
 			else throw new ApplicationException($"Block hash ({block.Hash}) is incorrect");
 			
 		}

@@ -22,21 +22,23 @@ class TypedBlockchain<T> : IEnumerable<TypedBlock<T>>
 		_rules = rules;
 	}
 
-	public void AddBlock(Block lowBlock)
+	public void AddBlock(TypedBlock<T> typedBlock)
 	{
-		var block = TypedBlock<T>.FromLowLevel(lowBlock);
 		foreach (var rule in _rules)
 		{
-			rule.Execute(this,block);
+			rule.Execute(this, typedBlock);
 		}
-		_blockchain.AddBlock(lowBlock);
+
+		var block = _blockchain.BuildBlock(typedBlock.RawData);
+		_blockchain.AddBlock(block);
 	}
 
-	public Block BuildBlock(T data)
+	public TypedBlock<T> BuildBlock(T data)
 	{
-		var raw = JsonSerializer.Serialize(data);
-		var lowBlock = _blockchain.BuildBlock(raw);
-		return lowBlock;
+		var dataStr = JsonSerializer.Serialize(data);
+		var block = _blockchain.BuildBlock(dataStr);
+		var typedBlock = new TypedBlock<T>(block.Hash, block.ParentHash, dataStr, data);
+		return typedBlock;
 	}
 
 	public IEnumerator<TypedBlock<T>> GetEnumerator() =>
